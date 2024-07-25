@@ -3,7 +3,7 @@ import HeadCard from "@/components/portal/HeadCard";
 import "./index.less";
 
 const info = {
-  github: "",
+  github: "https://github.com/fs1762920",
   gitee: "https://gitee.com/magic_fans/projects",
   email: "fs1762920@163.com",
 };
@@ -27,11 +27,11 @@ function index() {
           <ul className="contact-list">
             <li>
               <span>GitHub: </span>
-              <a href={info.github}>fs1762920</a>
+              <a href={info.github} target="blank">fs1762920</a>
             </li>
             <li>
               <span>Gitee: </span>
-              <a href={info.gitee}>magic_fans</a>
+              <a href={info.gitee} target="blank">magic_fans</a>
             </li>
             <li>
               <span>E-Mail: </span>
