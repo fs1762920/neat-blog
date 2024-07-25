@@ -1,59 +1,62 @@
-import './index.less'
+import HeadCard from "@/components/portal/HeadCard";
+import "./index.less";
 
 const categoryList = [
   {
     id: 2,
-    name: 'JAVA'
+    name: "JAVA",
   },
   {
     id: 3,
-    name: 'Node.js'
+    name: "Node.js",
   },
   {
     id: 4,
-    name: 'React'
+    name: "React",
   },
   {
     id: 5,
-    name: 'Vite'
+    name: "Vite",
   },
   {
     id: 6,
-    name: 'Webpack'
+    name: "Webpack",
   },
   {
     id: 7,
-    name: 'Kafka'
+    name: "Kafka",
   },
   {
     id: 8,
-    name: 'Websocket'
+    name: "Websocket",
   },
   {
     id: 9,
-    name: 'Websocket'
-  }
-]
+    name: "Websocket",
+  },
+];
 
 function index() {
-
   const renderCategorys = () => {
-    return categoryList.map(item => {
+    return categoryList.map((item) => {
       return (
-        <div className='category-item' key={item.id} style={{'fontSize': (Math.random() + 1) + 'rem'}}>
-          <span>
-            {item.name}
-          </span>
+        <div
+          className="category-item"
+          key={item.id}
+          style={{ fontSize: Math.random() + 1 + "rem" }}
+        >
+          <span>{item.name}</span>
         </div>
-      )
-    })
-  }
+      );
+    });
+  };
 
   return (
-    <div className='category'>
-      {renderCategorys()}
-    </div>
-  )
+    <>
+      <HeadCard />
+      <div className="category">{renderCategorys()}</div>
+    </>
+  );
 }
 
-export default index
+export default index;

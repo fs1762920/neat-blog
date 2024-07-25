@@ -2,37 +2,43 @@
     .article-list {
         width: 800px;
         margin: 0 auto;
+
         .article-item {
             background-color: #fff;
             border-radius: 8px;
             margin-bottom: 40px;
             padding: 40px 60px;
             cursor: pointer;
+
             .title {
                 font-size: 1.6rem;
                 // text-align: center;
                 margin-bottom: 40px;
                 font-weight: 600;
             }
+
             .introduction {
                 line-height: 24px;
                 margin-bottom: 20px;
             }
+
             .date {
                 line-height: 24px;
             }
-            &:hover{
+
+            &:hover {
                 transform: translateY(-5px);
-                box-shadow: 1px 10px 30px 0 rgba(0,0,0,.1)
+                box-shadow: 1px 10px 30px 0 rgba(0, 0, 0, .1)
             }
         }
     }
+
     @media only screen and (max-width: 800px) {
         .article-list {
             max-width: calc(100vw - 80px);
         }
     }
-    
+
     .page-bar {
         margin-bottom: 40px;
     }
