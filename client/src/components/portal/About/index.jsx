@@ -18,7 +18,7 @@ function index() {
           <p>
             2020年开始自建Blog，之后由于资金、精力等问题，导致很长一段时间没有写博客。
           </p>
-          <p>近些时间，打算重启Blog，并打算后期长期维护。</p>
+          <p>近些时间，打算重启Blog，并长期维护。</p>
           <p>源码保存于GitHub和Gitee，部署于AliCloud。</p>
           <p>本Blog旨在简洁、好用</p>
         </div>
