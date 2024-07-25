@@ -56,14 +56,14 @@ function index() {
   }
 
   return (
-    <>
+    <div className='index'>
       <div className='article-list'>
         {renderArticles()}
       </div>
       <div className='page-bar'>
 
       </div>
-    </>
+    </div>
   )
 }
 

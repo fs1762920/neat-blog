@@ -7,7 +7,7 @@ import Index from '@/components/portal/Index'
 import Category from '@/components/portal/Category'
 import Archives from '@/components/portal/Archives'
 import Links from '@/components/portal/Links'
-import Person from '@/components/portal/Person'
+import About from '@/components/portal/About'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function index() {
@@ -20,7 +20,7 @@ function index() {
               <Route path="/category" element={<Category />} />
               <Route path="/archives" element={<Archives />} />
               <Route path="/links" element={<Links />} />
-              <Route path="/person" element={<Person />} />
+              <Route path="/about" element={<About />} />
             </Route>
             <Route path="/admin" element={<Admin />} >
             </Route>

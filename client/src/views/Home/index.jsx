@@ -28,8 +28,8 @@ const menuList = [
   },
   {
     'id': 4,
-    'label': 'Person',
-    'route': '/person'
+    'label': 'About',
+    'route': '/about'
   }
 ]
 
