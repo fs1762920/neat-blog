@@ -37,13 +37,6 @@ const articleList = [
     status: 2,
     ctime: new Date(),
     mtime: new Date()
-  },
-  {
-    id: 4,
-    articleName: "约会应用有效吗",
-    status: 2,
-    ctime: new Date(),
-    mtime: new Date()
   }
 ]
 
