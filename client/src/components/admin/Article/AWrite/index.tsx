@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Input, Button } from 'antd'
-import MDEditor from '@uiw/react-md-editor';
+import { MdEditor } from 'md-editor-rt';
+import 'md-editor-rt/lib/style.css';
 import "./index.less"
 
 function index() {
@@ -13,10 +14,11 @@ function index() {
         <Input size="large"></Input>
         <Button size='large' type='primary'>发布文章</Button>
       </div>
+      {/* https://blog.csdn.net/Eternalyii/article/details/121742245 */}
       <div className='write-area'>
-          <MDEditor
-            value={content}
-            onChange={setContent}/>  
+        <MdEditor
+          modelValue={content}
+          onChange={setContent}/>  
       </div>
     </>
   )
