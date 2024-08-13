@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://162.14.119.233:3306/neat_blog?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+    druid:
+      validation-query: SELECT 1 FROM DUAL
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 6000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+
+upload:
+  target-path: 'D:\\data\\upload'
+  path-prefix: /upload
+
+sa-token:
+  token-name: satoken
+  timeout: 14400
+  activity-timeout: -1
+  is-concurrent: false
+  is-share: true
+  is-log: true
+  token-style: random-128
+  tokenPrefix: Bearer
+  private-key: MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAJNkuInvPLR+MabW9M7MsofR0kyjwrYMN9F0H0+DpUcrsJDr1qstGHQo3qR6vxaL2lW67MawNBY6oomaMn2wAzSzMnYCwB12MXPaenVXm86D8vsE0y+cVfYtVZPBRCblDjl9uNkY5lhzoQBEz/X/jA08On8PbCJkmfbHLwVmSpuvAgMBAAECgYBpbdxKXeQQP0wIyS1nVyhE2qMQyvqV+XtbyTI0UDhDBk9P+kIdQy6AuFM5V8ujtvm/5OtE2/kGBX8J6lA/c012obxZuya28UP6Ndb//Lrdxkfx7iK02nRgDhZ5Za7b4x1qsxhb8AW0TUg4jTgW0TLYPLJFlUJC+0qMa2MyHCgpoQJBAPO2rk7vOAffNT4kgOGAg4ABaxhgql8hwpwar6KjcoW3g73U1aX/zkZn9fnNtZrMPK1NO3NBQ1friYplb/ShqLcCQQCa0vODXRynC4F/cMe8xF+NqQRwUNIflnauJgWjZ5tcex/ztap59UWPOQe6ueHjwHOEPgqcYDZ+Rbr1Ybf1//zJAkBHfCL+pi5CKNd+Jcjj3AU2S7Q1D02J3+YsUauIwfZ6gEyVJtOQAEtp3V6J6ivFfvihQJEail8Nb9oFDSHcmHpbAkBBfX44UQivuHQ8vi4fMUniGF6iS+22IuVs4PR9nHPheMuZQX0tPY0A+nTEjaB5wIycocnHQAONAl4FMiKo0nHRAkA26dM1DJJRHlDyBgKy+Ls55Mr61XKvy6dH+wOe620WoZHwxploX0F+ohjJKnChmcur/otBMIPe9el/NfubuS1a
+  public-key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCTZLiJ7zy0fjGm1vTOzLKH0dJMo8K2DDfRdB9Pg6VHK7CQ69arLRh0KN6ker8Wi9pVuuzGsDQWOqKJmjJ9sAM0szJ2AsAddjFz2np1V5vOg/L7BNMvnFX2LVWTwUQm5Q45fbjZGOZYc6EARM/1/4wNPDp/D2wiZJn2xy8FZkqbrwIDAQAB
+  init-password: root123.
+
+login:
+  retry-times: 5
