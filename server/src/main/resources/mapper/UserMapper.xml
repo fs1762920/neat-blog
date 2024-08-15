@@ -7,9 +7,8 @@
         <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
         <result column="mail" jdbcType="VARCHAR" property="mail" />
-        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="github" jdbcType="VARCHAR" property="github" />
         <result column="available" jdbcType="INTEGER" property="available" />
-        <result column="avatar_path" jdbcType="VARCHAR" property="avatarPath" />
         <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
         <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
         <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
@@ -19,13 +18,13 @@
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         select
-            u.user_id, u.username, u.password, u.nick_name, u.mail, u.phone, u.available, u.avatar_path, u.ctime, u.mtime, u.last_login_time
+            u.user_id, u.username, u.password, u.nick_name, u.mail, u.github, u.available, u.ctime, u.mtime, u.last_login_time
         from neat_user u
         where u.user_id = #{userId}
     </select>
     <select id="selectBySelective" resultMap="BaseResultMap">
         select
-            u.user_id, u.username, u.password, u.nick_name, u.mail, u.phone, u.available, u.avatar_path, u.ctime, u.mtime, u.last_login_time
+            u.user_id, u.username, u.password, u.nick_name, u.mail, u.github, u.available, u.ctime, u.mtime, u.last_login_time
         from neat_user u
         <where>
             <if test="userId != null">
@@ -43,25 +42,19 @@
             <if test="mail != null">
                 and u.mail like concat('%', #{mail}, '%')
             </if>
-            <if test="phone != null">
-                and u.phone = #{phone}
-            </if>
             <if test="available != null">
                 and u.available = #{available}
-            </if>
-            <if test="deptId != null">
-                and u.dept_id = #{deptId}
             </if>
         </where>
         order by ctime desc
     </select>
     <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="cn.fan.neat.entity.po.UserEntity" useGeneratedKeys="true">
         insert into neat_user
-            (username, password, nick_name, mail, phone, available, avatar_path, ctime, mtime, last_login_time)
+            (username, password, nick_name, mail, github, available, ctime, mtime, last_login_time)
         values
             (#{username}, #{password}, #{nickName},
-            #{mail}, #{phone}, #{available},
-            #{roleId}, #{avatarPath}, #{deptId}, #{ctime}, #{mtime}, #{lastLoginTime})
+            #{mail}, #{github}, #{available},
+            #{ctime}, #{mtime}, #{lastLoginTime})
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.fan.neat.entity.po.UserEntity">
         update neat_user
@@ -75,14 +68,11 @@
             <if test="mail != null">
                 mail = #{mail},
             </if>
-            <if test="phone != null">
+            <if test="github != null">
                 phone = #{phone},
             </if>
             <if test="available != null">
                 available = #{available},
-            </if>
-            <if test="avatarPath != null">
-                avatar_path = #{avatarPath},
             </if>
             <if test="mtime != null">
                 mtime = #{mtime},
@@ -94,10 +84,10 @@
         where user_id = #{userId}
     </update>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from neat_user
+        delete from n_user
         where user_id = #{userId}
     </delete>
     <select id="selectCount" resultType="java.lang.Integer">
-        select COUNT(*) from neat_user
+        select COUNT(*) from n_user
     </select>
 </mapper>

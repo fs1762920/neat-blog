@@ -6,9 +6,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class WhaleAdminApplication {
+public class NeatApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WhaleAdminApplication.class, args);
+        SpringApplication.run(NeatApplication.class, args);
     }
 }

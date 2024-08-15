@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://162.14.119.233:3306/neat_blog?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
-    password: 17629207915gcfs.
+    password: qwer1234
     druid:
       validation-query: SELECT 1 FROM DUAL
       initial-size: 5

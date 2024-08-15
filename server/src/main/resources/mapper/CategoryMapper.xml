@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fan.neat.mapper.CategoryMapper">
+    <resultMap id="BaseResultMap" type="cn.fan.neat.entity.po.CategoryEntity">
+        <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+        <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+        <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        category_id, category_name, ctime, mtime
+    </sql>
+    <select id="selectBySelective" resultMap="BaseResultMap">
+        select
+        c.category_id, c.category_name, c.ctime, c.mtime
+        from neat_category c
+        <where>
+            <if test="categoryId != null">
+                and c.category_id = #{categoryId}
+            </if>
+            <if test="categoryName != null">
+                and c.category_name like concat('%', #{categoryName}, '%')
+            </if>
+        </where>
+        order by ctime desc
+    </select>
+    <insert id="insert" keyColumn="category_id" keyProperty="categoryId" parameterType="cn.fan.neat.entity.po.CategoryEntity" useGeneratedKeys="true">
+        insert into neat_category
+            (category_name, ctime, mtime)
+        values
+            (#{categoryName}, #{ctime}, #{mtime})
+    </insert>
+    <update id="updateBySelective" parameterType="cn.fan.neat.entity.po.CategoryEntity">
+        update neat_category
+        <set>
+            <if test="categoryName != null">
+                category_name = #{categoryName},
+            </if>
+            <if test="mtime != null">
+                mtime = #{mtime},
+            </if>
+        </set>
+        where category_id = #{categoryId}
+    </update>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from neat_category
+        where category_id = #{categoryId}
+    </delete>
+</mapper>

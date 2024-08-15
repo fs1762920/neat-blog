@@ -18,12 +18,10 @@ public class UserEntity implements Serializable {
 
     private String mail;
 
-    private String phone;
+    private String github;
 
     // 0 锁定  1 正常
     private Integer available;
-
-    private String avatarPath;
 
     private Date ctime;
 
