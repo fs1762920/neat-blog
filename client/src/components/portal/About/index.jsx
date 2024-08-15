@@ -30,10 +30,6 @@ function index() {
               <a href={info.github} target="blank">fs1762920</a>
             </li>
             <li>
-              <span>Gitee: </span>
-              <a href={info.gitee} target="blank">magic_fans</a>
-            </li>
-            <li>
               <span>E-Mail: </span>
               {info.email}
             </li>

@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://162.14.119.233:3306/neat_blog?useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://47.108.237.122:3306/neat_blog?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: qwer1234
     druid:

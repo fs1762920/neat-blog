@@ -14,18 +14,18 @@
         <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
     </resultMap>
     <sql id="Base_Column_List">
-        user_id, username, password, nick_name, mail, phone, available, avatar_path, ctime, mtime, last_login_time
+        user_id, username, password, nick_name, mail, github, available, ctime, mtime, last_login_time
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         select
             u.user_id, u.username, u.password, u.nick_name, u.mail, u.github, u.available, u.ctime, u.mtime, u.last_login_time
-        from neat_user u
+        from n_user u
         where u.user_id = #{userId}
     </select>
     <select id="selectBySelective" resultMap="BaseResultMap">
         select
             u.user_id, u.username, u.password, u.nick_name, u.mail, u.github, u.available, u.ctime, u.mtime, u.last_login_time
-        from neat_user u
+        from n_user u
         <where>
             <if test="userId != null">
                 and u.user_id = #{userId}
@@ -49,7 +49,7 @@
         order by ctime desc
     </select>
     <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="cn.fan.neat.entity.po.UserEntity" useGeneratedKeys="true">
-        insert into neat_user
+        insert into n_user
             (username, password, nick_name, mail, github, available, ctime, mtime, last_login_time)
         values
             (#{username}, #{password}, #{nickName},
@@ -57,7 +57,7 @@
             #{ctime}, #{mtime}, #{lastLoginTime})
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.fan.neat.entity.po.UserEntity">
-        update neat_user
+        update n_user
         <set>
             <if test="password != null">
                 password = #{password},
