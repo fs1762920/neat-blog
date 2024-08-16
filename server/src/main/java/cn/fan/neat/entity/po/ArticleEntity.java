@@ -16,6 +16,8 @@ public class ArticleEntity implements Serializable {
 
     private Integer categoryId;
 
+    private String categoryName;
+
     private String introduction;
 
     private Integer status;

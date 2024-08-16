@@ -31,8 +31,8 @@ public class ArticleController {
         if (StringUtils.isEmpty(articleEntity.getTitle()) || StringUtils.isEmpty(articleEntity.getContent())) {
             throw new BizException(ExceptionEnum.ILLEGAL_PARAM_ERROR);
         }
-        articleService.save(articleEntity);
-        return BaseReturnDto.success(BaseReturnDto.RESP_SUCCESS_CODE, "保存成功");
+        int articleId = articleService.save(articleEntity);
+        return BaseReturnDto.success(articleId, "保存成功");
     }
 
     // 修改文章

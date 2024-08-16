@@ -2,15 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
-  Space,
-  Modal,
-  Table,
   Form,
   Input,
-  InputNumber,
   message,
 } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { cleanToken, cleanUserInfo } from "@/stores/actions";
 import { $get, $post } from "@/api/RestUtils";
 import { encrypt } from "@/utils/RSAUtils";
@@ -170,7 +166,7 @@ function index() {
                 { max: 20, min: 6, message: "长度在6~20位之间" },
               ]}
             >
-              <Input placeholder="原密码" maxLength={20} />
+              <Input placeholder="原密码" type="password" maxLength={20} />
             </Form.Item>
             <Form.Item
               name="newPass"
@@ -181,7 +177,7 @@ function index() {
                 { max: 20, min: 6, message: "长度在6~20位之间" },
               ]}
             >
-              <Input placeholder="新密码" maxLength={20} />
+              <Input placeholder="新密码" type="password" maxLength={20} />
             </Form.Item>
             <Form.Item
               name="checkPass"
@@ -197,7 +193,7 @@ function index() {
                 { validator: checkRepeatPass },
               ]}
             >
-              <Input placeholder="新密码" maxLength={20} />
+              <Input placeholder="新密码" type="password" maxLength={20} />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit">

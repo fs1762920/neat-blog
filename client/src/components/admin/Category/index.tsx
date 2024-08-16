@@ -1,34 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Space, Modal, Table, Form, Input, InputNumber, message } from 'antd'
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Space,
+  Modal,
+  Table,
+  Form,
+  Input,
+  InputNumber,
+  message,
+} from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,
 } from "@ant-design/icons";
-import { datetimeFormat } from '@/utils/dateUtils'
+import { datetimeFormat } from "@/utils/dateUtils";
 import { $get, $post } from "@/api/RestUtils";
-import "./index.less"
+import "./index.less";
 
 function index() {
-
   const columnList = [
     {
-      title: '分类名称',
-      dataIndex: 'categoryName',
-      key: 'categoryName',
-      align: 'center'
+      title: "分类名称",
+      dataIndex: "categoryName",
+      key: "categoryName",
+      align: "center",
     },
     {
-      title: '排序值',
-      dataIndex: 'sort',
-      key: 'sort',
-      align: 'center'
+      title: "排序值",
+      dataIndex: "sort",
+      key: "sort",
+      align: "center",
     },
     {
-      title: '创建时间',
-      dataIndex: 'ctime',
-      key: 'ctime',
-      align: 'center',
+      title: "创建时间",
+      dataIndex: "ctime",
+      key: "ctime",
+      align: "center",
       render: (record) => datetimeFormat(record),
     },
     {
@@ -60,8 +68,7 @@ function index() {
         );
       },
     },
-  ]
-
+  ];
 
   const [dataForm] = Form.useForm();
   const [categoryList, setCategoryList] = useState([]);
@@ -69,11 +76,10 @@ function index() {
   const [currentPage, setCurrentPage] = useState(1);
   const [infoModalShow, setInfoModalShow] = useState(false);
   const [infoModalTitle, setInfoModalTitle] = useState("");
-  
 
   useEffect(() => {
     search(currentPage, 10);
-  }, [])
+  }, []);
 
   const switchDataModalShow = (show, model, formData) => {
     setInfoModalShow(show);
@@ -91,7 +97,7 @@ function index() {
     setInfoModalShow(false);
     resetDataForm();
   };
-  
+
   const search = (pageNo, pageSize) => {
     let param = {
       pageNo: pageNo,
@@ -103,9 +109,9 @@ function index() {
           let categoryList = res.data.list.map((item: any) => {
             return {
               key: item.categoryId,
-              ...item
-            }
-          })
+              ...item,
+            };
+          });
           setCategoryList(categoryList);
           setTotal(res.data.total);
           setCurrentPage(pageNo);
@@ -176,7 +182,6 @@ function index() {
     dataForm.resetFields();
   };
 
-
   return (
     <>
       <Modal
@@ -211,7 +216,7 @@ function index() {
             label="排序值"
             rules={[
               { required: true, type: "number", message: "排序值" },
-              { type: 'number', min: 0, max: 99, message: "范围在0~99" }
+              { type: "number", min: 0, max: 99, message: "范围在0~99" },
             ]}
           >
             <InputNumber placeholder="排序值" maxLength={2} />
@@ -224,25 +229,30 @@ function index() {
           </Form.Item>
         </Form>
       </Modal>
-    <div className='category-main'>
-      <div className='operate-area'>
-        <Button type="primary" onClick={() => switchDataModalShow(true, 0, null)}>新增分类</Button>
+      <div className="category-main">
+        <div className="operate-area">
+          <Button
+            type="primary"
+            onClick={() => switchDataModalShow(true, 0, null)}
+          >
+            新增分类
+          </Button>
+        </div>
+        <div className="table-area">
+          <Table
+            dataSource={categoryList}
+            columns={columnList}
+            scroll={{ x: 1200 }}
+            pagination={{
+              current: currentPage,
+              total: total,
+              onChange: search,
+            }}
+          />
+        </div>
       </div>
-      <div className='table-area'>
-        <Table
-              dataSource={categoryList}
-              columns={columnList}
-              scroll={{ x: 1200 }}
-              pagination={{
-                current: currentPage,
-                total: total,
-                onChange: search,
-              }}
-            />
-      </div>
-    </div>
     </>
-  )
+  );
 }
 
-export default index
+export default index;

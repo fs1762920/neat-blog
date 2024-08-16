@@ -23,7 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 
     @Override
-    public void save(ArticleEntity articleEntity) {
+    public int save(ArticleEntity articleEntity) {
         if (articleEntity.getStatus() == null) {
             // 默认存为草稿
             articleEntity.setStatus(0);
@@ -32,6 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleEntity.setCtime(nowDate);
         articleEntity.setMtime(nowDate);
         articleMapper.insert(articleEntity);
+        return articleEntity.getArticleId();
     }
 
     @Override

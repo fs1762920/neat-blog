@@ -6,6 +6,7 @@
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="content" jdbcType="VARCHAR" property="content" />
         <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
         <result column="introduction" jdbcType="VARCHAR" property="introduction" />
         <result column="status" jdbcType="INTEGER" property="status" />
         <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
@@ -19,8 +20,10 @@
             a.introduction,
             a.status,
             a.ctime,
-            a.mtime
+            a.mtime,
+            c.category_name
         from neat_blog.n_article a
+        left join neat_blog.n_category c on a.category_id = c.category_id
         <where>
             <if test="articleId != null">
                 and a.article_id = #{articleId}
@@ -67,7 +70,7 @@
         insert into neat_blog.n_article
             (title, content, category_id, introduction, `status`, ctime, mtime)
         values
-            (#{title}, #{content}, #{category_id}, #{introduction}, #{status}, #{ctime}, #{mtime})
+            (#{title}, #{content}, #{categoryId}, #{introduction}, #{status}, #{ctime}, #{mtime})
     </insert>
     <update id="updateBySelective" parameterType="cn.fan.neat.entity.po.ArticleEntity">
         update neat_blog.n_article

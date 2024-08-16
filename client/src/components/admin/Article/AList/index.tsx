@@ -1,55 +1,29 @@
-import React, { useState } from 'react'
-import { Button, Space, Modal, Table, Form, Input } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Button, Space, Modal, Table, message } from 'antd'
 import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import { datetimeFormat } from '@/utils/dateUtils'
+import { $get, $post } from "@/api/RestUtils";
 import "./index.less"
-
-// status: 0已删除  1草稿  2已发布
-const articleList = [
-  {
-    id: 0,
-    articleName: "vue入门到入土",
-    status: 0,
-    ctime: new Date(),
-    mtime: new Date()
-  },
-  {
-    id: 1,
-    articleName: "BBC6分钟-讨论素食主义如何提高",
-    status: 1,
-    ctime: new Date(),
-    mtime: new Date()
-  },
-  {
-    id: 2,
-    articleName: "文化差异和肢体语言",
-    status: 2,
-    ctime: new Date(),
-    mtime: new Date()
-  },
-  {
-    id: 3,
-    articleName: "我们能相信智能扬声器吗",
-    status: 2,
-    ctime: new Date(),
-    mtime: new Date()
-  }
-]
-
-
 
 function index() {
 
   const columnList = [
     {
       title: '文章标题',
-      dataIndex: 'articleName',
-      key: 'articleName',
-      width: 800,
+      dataIndex: 'title',
+      key: 'title',
+      width: 640,
+      align: 'center'
+    },
+    {
+      title: '分类',
+      dataIndex: 'categoryName',
+      key: 'categoryName',
       align: 'center'
     },
     {
@@ -58,13 +32,6 @@ function index() {
       key: 'status',
       align: 'center',
       render: (record) => renderStatus(record),
-    },
-    {
-      title: '创建时间',
-      dataIndex: 'ctime',
-      key: 'ctime',
-      align: 'center',
-      render: (record) => datetimeFormat(record),
     },
     {
       title: '更新时间',
@@ -86,7 +53,7 @@ function index() {
               type="link"
               icon={<EditOutlined />}
               size="small"
-              onClick={() => toEdit(record.id)}
+              onClick={() => toEdit(record.articleId)}
             >
               修改
             </Button>
@@ -94,7 +61,7 @@ function index() {
               type="link"
               icon={<DeleteOutlined />}
               size="small"
-              onClick={() => deleteConfirm(record.id)}
+              onClick={() => deleteConfirm(record.articleId)}
             >
               删除
             </Button>
@@ -103,30 +70,41 @@ function index() {
       },
     },
   ]
-
-
-  const [dataForm] = Form.useForm();
+  
+  const navigate = useNavigate();
+  
+  const [articleList, setArticleList] = useState(0);
   const [total, setTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [infoModalShow, setInfoModalShow] = useState(false);
-  const [infoModalTitle, setInfoModalTitle] = useState("");
+
+  useEffect(() => {
+    search(1, 10);
+  }, [])
   
-  const search = (pageNum, pageSize) => {
+  const search = (pageNo, pageSize) => {
     let param = {
-      pageNum: pageNum,
+      pageNo: pageNo,
       pageSize: pageSize,
     };
-    
-  };
-
-  const saveOrUpdate = (formData) => {
-    let url;
-    if (formData.userId != null) {
-      url = "/article/update";
-    } else {
-      url = "/article/save";
-    }
-    
+    $get("/article/findByPage", param)
+      .then((res: any) => {
+        if (res.code === 0) {
+          let articleList = res.data.list.map((item: any) => {
+            return {
+              key: item.categoryId,
+              ...item,
+            };
+          });
+          setArticleList(articleList);
+          setTotal(res.data.total);
+          setCurrentPage(pageNo);
+        } else {
+          message.error(res.msg);
+        }
+      })
+      .catch((err: any) => {
+        message.error("系统异常");
+      });
   };
 
   const deleteConfirm = (id) => {
@@ -136,25 +114,42 @@ function index() {
       okText: "是",
       cancelText: "否",
       onOk() {
-        console.log("delete id: ", id)
+        deleteArticle(id);
       },
     });
+  };
+
+  const deleteArticle = (id) => {
+    let param = {
+      articleId: id,
+    };
+    $get("/article/delete", param)
+      .then((res: any) => {
+        if (res.code === 0) {
+          message.success(res.msg);
+          setCurrentPage(1);
+          search(1, 10);
+        } else {
+          message.error(res.msg);
+        }
+      })
+      .catch((err: any) => {
+        message.error("系统异常");
+      });
   };
 
   const renderStatus = (status) => {
     let result = ""
     if (status == 0) {
-      result = "已删除"
-    } else if (status == 1) {
       result = "草稿"
-    } else if (status == 2) {
+    } else if (status == 1) {
       result = "已发布"
     }
     return result;
   }
 
   const toEdit = (id) => {
-
+    navigate("/admin/article/write")
   }
 
   return (
