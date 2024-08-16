@@ -56,7 +56,7 @@ function index() {
   return (
     <>
       <HeadCard />
-      <div className="category">{renderCategorys()}</div>
+      <div className="category-main">{renderCategorys()}</div>
     </>
   );
 }

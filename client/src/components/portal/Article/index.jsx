@@ -6,8 +6,6 @@ import { $get } from "@/api/RestUtils";
 import 'md-editor-rt/lib/preview.css';
 import "./index.less";
 
-const scrollElement = document.documentElement;
-
 function index() {
   
   const [searchParams] = useSearchParams();
@@ -19,7 +17,6 @@ function index() {
     if (articleId != undefined && articleId != null) {
       loadArticleInfo(articleId);
     }
-    console.log("articleInfo: ", articleInfo)
   }, [])
 
   const loadArticleInfo = (articleId) => {

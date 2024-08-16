@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Pagination } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import HeadCard from "@/components/portal/HeadCard";
 import { dateFormat } from '@/utils/dateUtils'
 import { $get } from "@/api/RestUtils";
@@ -9,19 +9,26 @@ import "./index.less";
 function index() {
   
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [articleList, setArticleList] = useState([]);
   const [total, setTotal] = useState();
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    search(currentPage, 5);
-  }, [])
+    let categoryId = searchParams.get('categoryId');
+    let condition = {}
+    if (categoryId != undefined && categoryId != null) {
+      condition.categoryId = categoryId
+    }
+    search(currentPage, 5, condition);
+  }, [searchParams])
 
-  const search = (pageNo, pageSize) => {
+  const search = (pageNo, pageSize, condition) => {
     let param = {
       pageNo: pageNo,
       pageSize: pageSize,
+      ...condition
     };
     $get("/article/findPortalByPage", param)
       .then((res) => {
@@ -55,9 +62,9 @@ function index() {
         <div className="article-item" key={item.articleId} onClick={() => toDetail(item.articleId)}>
           <div className="title">{item.title}</div>
           <div className="introduction">{item.introduction}</div>
-          <div className="foot">
-            <span className="category">{"#" + item.categoryName}</span>
+          <div className="item-foot">
             <span className="date">{dateFormat(item.ctime)}</span>
+            <span className="category">{"#" + item.categoryName}</span>
           </div>
         </div>
       );
