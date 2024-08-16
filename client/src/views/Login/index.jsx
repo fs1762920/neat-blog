@@ -1,14 +1,34 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setToken } from "@/stores/actions";
+import { encrypt } from "@/utils/RSAUtils";
+import { $post } from "@/api/RestUtils";
 
 import "./index.less";
 
 function Login() {
 
-  const onFinish = (values) => {
-    console.log('Success:', values);
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const login = (formData) => {
+    formData.password = encrypt(formData.password);
+    console.log('formdata:', formData);
+    $post("/user/login", formData)
+      .then((res) => {
+        if (res.code === 0) {
+          dispatch(setToken(res.data))
+          message.success(res.msg);
+          navigate("/admin");
+        } else {
+          message.error(res.msg);
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        message.error("系统异常");
+      });
   };
 
 
@@ -21,9 +41,7 @@ function Login() {
           initialValues={{
             remember: true,
           }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
+          onFinish={login}
         >
           <Form.Item
             name="username"
@@ -34,7 +52,7 @@ function Login() {
               },
             ]}
           >
-            <Input size="large" placeholder="username" />
+            <Input size="large" placeholder="username" maxLength={10} />
           </Form.Item>
 
           <Form.Item
@@ -46,18 +64,7 @@ function Login() {
               },
             ]}
           >
-            <Input.Password size="large" placeholder="username" />
-          </Form.Item>
-
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Checkbox>Remember me</Checkbox>
+            <Input.Password size="large" placeholder="username" maxLength={16} />
           </Form.Item>
 
           <Form.Item

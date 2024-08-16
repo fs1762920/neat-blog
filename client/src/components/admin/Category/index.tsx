@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button, Space, Modal, Table, Form, Input } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Button, Space, Modal, Table, Form, Input, InputNumber, message } from 'antd'
 import {
   SearchOutlined,
   ReloadOutlined,
@@ -9,39 +9,8 @@ import {
   ExclamationCircleFilled,
 } from "@ant-design/icons";
 import { datetimeFormat } from '@/utils/dateUtils'
+import { $get, $post } from "@/api/RestUtils";
 import "./index.less"
-
-
-const categoryList = [
-  {
-    id: 0,
-    categoryName: "语言学习",
-    ctime: new Date()
-  },
-  {
-    id: 1,
-    categoryName: "技术",
-    ctime: new Date()
-  },
-  {
-    id: 2,
-    categoryName: "生活",
-    ctime: new Date(),
-    mtime: new Date()
-  },
-  {
-    id: 3,
-    categoryName: "阅读杂谈",
-    ctime: new Date()
-  },
-  {
-    id: 4,
-    categoryName: "其他",
-    ctime: new Date()
-  }
-]
-
-
 
 function index() {
 
@@ -50,6 +19,12 @@ function index() {
       title: '分类名称',
       dataIndex: 'categoryName',
       key: 'categoryName',
+      align: 'center'
+    },
+    {
+      title: '排序值',
+      dataIndex: 'sort',
+      key: 'sort',
       align: 'center'
     },
     {
@@ -92,10 +67,16 @@ function index() {
 
 
   const [dataForm] = Form.useForm();
+  const [categoryList, setCategoryList] = useState([]);
   const [total, setTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [infoModalShow, setInfoModalShow] = useState(false);
   const [infoModalTitle, setInfoModalTitle] = useState("");
+  
+
+  useEffect(() => {
+    search(currentPage, 10);
+  }, [])
 
   const switchDataModalShow = (show, model, formData) => {
     setInfoModalShow(show);
@@ -114,22 +95,53 @@ function index() {
     resetDataForm();
   };
   
-  const search = (pageNum, pageSize) => {
+  const search = (pageNo, pageSize) => {
     let param = {
-      pageNum: pageNum,
+      pageNo: pageNo,
       pageSize: pageSize,
     };
-    
+    $get("/category/findByPage", param)
+      .then((res: any) => {
+        if (res.code === 0) {
+          let categoryList = res.data.list.map((item: any) => {
+            return {
+              key: item.categoryId,
+              ...item
+            }
+          })
+          setCategoryList(categoryList);
+          setTotal(res.data.total);
+          setCurrentPage(pageNo);
+        } else {
+          message.error(res.msg);
+        }
+      })
+      .catch((err: any) => {
+        message.error("系统异常");
+      });
   };
 
   const saveOrUpdate = (formData) => {
     let url;
-    if (formData.userId != null) {
-      url = "/user/update";
+    if (formData.categoryId != null) {
+      url = "/category/update";
     } else {
-      url = "/user/save";
+      url = "/category/save";
     }
-    
+    $post(url, formData)
+      .then((res: any) => {
+        if (res.code === 0) {
+          message.success(res.msg);
+          setCurrentPage(1);
+          search(1, 10);
+          closeModal();
+        } else {
+          message.error(res.msg);
+        }
+      })
+      .catch((err: any) => {
+        message.error("系统异常");
+      });
   };
 
   const deleteConfirm = (id) => {
@@ -139,9 +151,28 @@ function index() {
       okText: "是",
       cancelText: "否",
       onOk() {
-        console.log("delete id: ", id)
+        deleteCategory(id);
       },
     });
+  };
+
+  const deleteCategory = (id) => {
+    let param = {
+      categoryId: id,
+    };
+    $get("/category/delete", param)
+      .then((res: any) => {
+        if (res.code === 0) {
+          message.success(res.msg);
+          setCurrentPage(1);
+          search(1, 10);
+        } else {
+          message.error(res.msg);
+        }
+      })
+      .catch((err: any) => {
+        message.error("系统异常");
+      });
   };
 
   const resetDataForm = () => {
@@ -160,11 +191,12 @@ function index() {
       >
         <Form
           form={dataForm}
+          layout="vertical"
           labelAlign="right"
           colon={false}
           onFinish={saveOrUpdate}
         >
-          <Form.Item name="id" hidden={true}>
+          <Form.Item name="categoryId" hidden={true}>
             <Input />
           </Form.Item>
           <Form.Item
@@ -176,6 +208,16 @@ function index() {
             ]}
           >
             <Input placeholder="分类名称" maxLength={10} />
+          </Form.Item>
+          <Form.Item
+            name="sort"
+            label="排序值"
+            rules={[
+              { required: true, type: "number", message: "排序值" },
+              { type: 'number', min: 0, max: 99, message: "范围在0~99" }
+            ]}
+          >
+            <InputNumber placeholder="排序值" maxLength={2} />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">

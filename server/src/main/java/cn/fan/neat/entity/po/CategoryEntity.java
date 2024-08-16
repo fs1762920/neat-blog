@@ -12,6 +12,8 @@ public class CategoryEntity implements Serializable {
 
     private String categoryName;
 
+    private Integer sort;
+
     private Date ctime;
 
     private Date mtime;

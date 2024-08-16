@@ -4,12 +4,13 @@
     <resultMap id="BaseResultMap" type="cn.fan.neat.entity.po.CategoryEntity">
         <id column="category_id" jdbcType="INTEGER" property="categoryId" />
         <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+        <result column="sort" jdbcType="INTEGER" property="sort" />
         <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
         <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
     </resultMap>
     <select id="selectBySelective" resultMap="BaseResultMap">
         select
-        c.category_id, c.category_name, c.ctime, c.mtime
+        c.category_id, c.category_name, c.sort, c.ctime, c.mtime
         from neat_blog.n_category c
         <where>
             <if test="categoryId != null">
@@ -19,19 +20,22 @@
                 and c.category_name like concat('%', #{categoryName}, '%')
             </if>
         </where>
-        order by ctime desc
+        order by c.sort
     </select>
     <insert id="insert" keyColumn="category_id" keyProperty="categoryId" parameterType="cn.fan.neat.entity.po.CategoryEntity" useGeneratedKeys="true">
         insert into neat_blog.n_category
-            (category_name, ctime, mtime)
+            (category_name, sort, ctime, mtime)
         values
-            (#{categoryName}, #{ctime}, #{mtime})
+            (#{categoryName}, #{sort}, #{ctime}, #{mtime})
     </insert>
     <update id="updateBySelective" parameterType="cn.fan.neat.entity.po.CategoryEntity">
         update neat_blog.n_category
         <set>
             <if test="categoryName != null">
                 category_name = #{categoryName},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
             </if>
             <if test="mtime != null">
                 mtime = #{mtime},
