@@ -4,7 +4,7 @@ import cn.fan.neat.entity.po.ArticleEntity;
 import com.github.pagehelper.PageInfo;
 
 public interface ArticleService {
-    void add(ArticleEntity articleEntity);
+    void save(ArticleEntity articleEntity);
 
     void update(ArticleEntity articleEntity);
 

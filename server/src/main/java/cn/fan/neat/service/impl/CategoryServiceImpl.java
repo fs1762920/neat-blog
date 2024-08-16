@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public void add(CategoryEntity categoryEntity) {
+    public void save(CategoryEntity categoryEntity) {
         Date nowDate = new Date();
         categoryEntity.setCtime(nowDate);
         categoryEntity.setMtime(nowDate);

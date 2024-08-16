@@ -26,12 +26,12 @@ public class ArticleController {
     }
 
     // 新增文章
-    @PostMapping("/add")
-    public BaseReturnDto add(@RequestBody ArticleEntity articleEntity) {
+    @PostMapping("/save")
+    public BaseReturnDto save(@RequestBody ArticleEntity articleEntity) {
         if (StringUtils.isEmpty(articleEntity.getTitle()) || StringUtils.isEmpty(articleEntity.getContent())) {
             throw new BizException(ExceptionEnum.ILLEGAL_PARAM_ERROR);
         }
-        articleService.add(articleEntity);
+        articleService.save(articleEntity);
         return BaseReturnDto.success(BaseReturnDto.RESP_SUCCESS_CODE, "保存成功");
     }
 

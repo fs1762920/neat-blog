@@ -6,7 +6,7 @@ import com.github.pagehelper.PageInfo;
 import java.util.List;
 
 public interface CategoryService {
-    void add(CategoryEntity categoryEntity);
+    void save(CategoryEntity categoryEntity);
 
     void update(CategoryEntity categoryEntity);
 

@@ -27,12 +27,12 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/add")
-    public BaseReturnDto add(@RequestBody CategoryEntity categoryEntity) {
+    @PostMapping("/save")
+    public BaseReturnDto save(@RequestBody CategoryEntity categoryEntity) {
         if (StringUtils.isEmpty(categoryEntity.getCategoryName())) {
             throw new BizException(ExceptionEnum.ILLEGAL_PARAM_ERROR);
         }
-        categoryService.add(categoryEntity);
+        categoryService.save(categoryEntity);
         return BaseReturnDto.success(BaseReturnDto.RESP_SUCCESS_CODE, "添加成功");
     }
 

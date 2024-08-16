@@ -23,7 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 
     @Override
-    public void add(ArticleEntity articleEntity) {
+    public void save(ArticleEntity articleEntity) {
         if (articleEntity.getStatus() == null) {
             // 默认存为草稿
             articleEntity.setStatus(0);
