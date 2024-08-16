@@ -1,7 +1,11 @@
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/neat_blog?useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://localhost:3306/neat_blog?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: qwer1234
     druid:
