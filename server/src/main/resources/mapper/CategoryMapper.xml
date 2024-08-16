@@ -7,13 +7,10 @@
         <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
         <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
     </resultMap>
-    <sql id="Base_Column_List">
-        category_id, category_name, ctime, mtime
-    </sql>
     <select id="selectBySelective" resultMap="BaseResultMap">
         select
         c.category_id, c.category_name, c.ctime, c.mtime
-        from neat_category c
+        from neat_blog.n_category c
         <where>
             <if test="categoryId != null">
                 and c.category_id = #{categoryId}
@@ -25,13 +22,13 @@
         order by ctime desc
     </select>
     <insert id="insert" keyColumn="category_id" keyProperty="categoryId" parameterType="cn.fan.neat.entity.po.CategoryEntity" useGeneratedKeys="true">
-        insert into neat_category
+        insert into neat_blog.n_category
             (category_name, ctime, mtime)
         values
             (#{categoryName}, #{ctime}, #{mtime})
     </insert>
     <update id="updateBySelective" parameterType="cn.fan.neat.entity.po.CategoryEntity">
-        update neat_category
+        update neat_blog.n_category
         <set>
             <if test="categoryName != null">
                 category_name = #{categoryName},
@@ -43,7 +40,7 @@
         where category_id = #{categoryId}
     </update>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from neat_category
+        delete from neat_blog.n_category
         where category_id = #{categoryId}
     </delete>
 </mapper>

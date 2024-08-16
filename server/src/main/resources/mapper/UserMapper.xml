@@ -13,19 +13,34 @@
         <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
         <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
     </resultMap>
-    <sql id="Base_Column_List">
-        user_id, username, password, nick_name, mail, github, available, ctime, mtime, last_login_time
-    </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         select
-            u.user_id, u.username, u.password, u.nick_name, u.mail, u.github, u.available, u.ctime, u.mtime, u.last_login_time
-        from n_user u
+            u.user_id,
+            u.username,
+            u.password,
+            u.nick_name,
+            u.mail,
+            u.github,
+            u.available,
+            u.ctime,
+            u.mtime,
+            u.last_login_time
+        from neat_blog.n_user u
         where u.user_id = #{userId}
     </select>
     <select id="selectBySelective" resultMap="BaseResultMap">
         select
-            u.user_id, u.username, u.password, u.nick_name, u.mail, u.github, u.available, u.ctime, u.mtime, u.last_login_time
-        from n_user u
+            u.user_id,
+            u.username,
+            u.password,
+            u.nick_name,
+            u.mail,
+            u.github,
+            u.available,
+            u.ctime,
+            u.mtime,
+            u.last_login_time
+        from neat_blog.n_user u
         <where>
             <if test="userId != null">
                 and u.user_id = #{userId}
@@ -49,15 +64,15 @@
         order by ctime desc
     </select>
     <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="cn.fan.neat.entity.po.UserEntity" useGeneratedKeys="true">
-        insert into n_user
-            (username, password, nick_name, mail, github, available, ctime, mtime, last_login_time)
+        insert into neat_blog.n_user
+            (username, `password`, nick_name, mail, github, available, ctime, mtime, last_login_time)
         values
             (#{username}, #{password}, #{nickName},
             #{mail}, #{github}, #{available},
             #{ctime}, #{mtime}, #{lastLoginTime})
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="cn.fan.neat.entity.po.UserEntity">
-        update n_user
+        update neat_blog.n_user
         <set>
             <if test="password != null">
                 password = #{password},
@@ -84,10 +99,10 @@
         where user_id = #{userId}
     </update>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from n_user
+        delete from neat_blog.n_user
         where user_id = #{userId}
     </delete>
     <select id="selectCount" resultType="java.lang.Integer">
-        select COUNT(*) from n_user
+        select COUNT(*) from neat_blog.n_user
     </select>
 </mapper>

@@ -50,17 +50,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(UserEntity userEntity) {
-        String encryptedPass = RSAUtils.encrypt(publicKey, initPassword);
-        userEntity.setPassword(encryptedPass);
-        userEntity.setAvailable(1);
-        Date nowDate = new Date();
-        userEntity.setCtime(nowDate);
-        userEntity.setMtime(nowDate);
-        userMapper.insert(userEntity);
-    }
-
-    @Override
     public void changePass(PassRequest passRequest) {
         UserEntity user = userMapper.selectByPrimaryKey(passRequest.getUserId());
         if (user == null) {
@@ -109,9 +98,6 @@ public class UserServiceImpl implements UserService {
                         lockedUser.setUserId(userId);
                         lockedUser.setAvailable(0);
                         userMapper.updateByPrimaryKeySelective(lockedUser);
-                        /**
-                         * 给当前用户邮箱发送邮件，内容：解锁账户的url，生成短链
-                         */
                         throw new BizException(ExceptionEnum.USER_NOT_FOUND);
                     } else {
                         GlobalVal.RETRY_TIMES.put(userId, times);
@@ -166,6 +152,19 @@ public class UserServiceImpl implements UserService {
             user.setCtime(nowDate);
             user.setMtime(nowDate);
             userMapper.insert(user);
+        }
+    }
+
+    @Override
+    public void recoverAccountStatus() {
+        List<UserEntity> userList = userMapper.selectBySelective(new UserEntity());
+        for (UserEntity userInfo : userList) {
+            if (userInfo.getAvailable() == null || userInfo.getAvailable() == 0) {
+                UserEntity userEntity = new UserEntity();
+                userEntity.setUserId(userInfo.getUserId());
+                userEntity.setAvailable(1);
+                userMapper.updateByPrimaryKeySelective(userEntity);
+            }
         }
     }
 }

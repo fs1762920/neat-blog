@@ -1,4 +1,4 @@
-package cn.fan.neat.initial;
+package cn.fan.neat.job;
 
 import cn.fan.neat.service.UserService;
 import lombok.extern.slf4j.Slf4j;

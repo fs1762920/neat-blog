@@ -6,8 +6,6 @@ import cn.fan.neat.entity.po.UserEntity;
 public interface UserService {
     void update(UserEntity userEntity);
 
-    void save(UserEntity userEntity);
-
     void changePass(PassRequest passRequest);
 
     String login(UserEntity userEntity);
@@ -19,4 +17,6 @@ public interface UserService {
     void unlock(Integer userId);
 
     void initUser();
+
+    void recoverAccountStatus();
 }

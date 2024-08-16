@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class BlogEntity implements Serializable {
+public class ArticleEntity implements Serializable {
 
-    private Integer blogId;
+    private Integer articleId;
 
     private String title;
 
