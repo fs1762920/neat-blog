@@ -4,7 +4,7 @@ public enum ExceptionEnum {
     SUCCESS(200, "成功!"),
     BODY_NOT_MATCH(400, "请求的数据格式不符!"),
     AUTH_FAIL_CODE(401, "密码错误!"),
-    OLD_PASS_DIFFER_CODE(406, "旧密码错误!"),
+    OLD_PASS_DIFFER_CODE(406, "原密码错误!"),
     USER_NOT_FOUND(402, "该用户不存在或已被锁定!"),
     NO_TOKEN_CODE(405, "请重新登录!"),
     DATA_REPEAT_CODE(407, "数据已存在!"),

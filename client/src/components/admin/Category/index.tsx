@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Space, Modal, Table, Form, Input, InputNumber, message } from 'antd'
 import {
-  SearchOutlined,
-  ReloadOutlined,
-  PlusOutlined,
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,

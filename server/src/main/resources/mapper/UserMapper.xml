@@ -28,6 +28,19 @@
         from neat_blog.n_user u
         where u.user_id = #{userId}
     </select>
+    <select id="selectByPrimaryKeyWithoutPass" resultMap="BaseResultMap">
+        select
+            u.user_id,
+            u.username,
+            u.nick_name,
+            u.mail,
+            u.github,
+            u.available,
+            u.ctime,
+            u.mtime
+        from neat_blog.n_user u
+        where u.user_id = #{userId}
+    </select>
     <select id="selectBySelective" resultMap="BaseResultMap">
         select
             u.user_id,
@@ -84,7 +97,7 @@
                 mail = #{mail},
             </if>
             <if test="github != null">
-                phone = #{phone},
+                github = #{github},
             </if>
             <if test="available != null">
                 available = #{available},
