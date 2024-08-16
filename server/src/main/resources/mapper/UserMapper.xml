@@ -28,6 +28,14 @@
         from neat_blog.n_user u
         where u.user_id = #{userId}
     </select>
+    <select id="selectOne" resultMap="BaseResultMap">
+        select
+            u.nick_name,
+            u.mail,
+            u.github
+        from neat_blog.n_user u
+        limit 1
+    </select>
     <select id="selectByPrimaryKeyWithoutPass" resultMap="BaseResultMap">
         select
             u.user_id,

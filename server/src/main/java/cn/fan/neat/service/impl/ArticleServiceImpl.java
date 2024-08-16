@@ -3,13 +3,14 @@ package cn.fan.neat.service.impl;
 import cn.fan.neat.entity.po.ArticleEntity;
 import cn.fan.neat.mapper.ArticleMapper;
 import cn.fan.neat.service.ArticleService;
+import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -57,5 +58,30 @@ public class ArticleServiceImpl implements ArticleService {
         PageHelper.startPage(pageNo, pageSize);
         List<ArticleEntity> dataList = articleMapper.selectBySelective(articleEntity);
         return new PageInfo<>(dataList);
+    }
+
+    @Override
+    public List<JSONObject> findByArchive(ArticleEntity articleEntity) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy");
+        List<ArticleEntity> dataList = articleMapper.selectBySelective(articleEntity);
+        Map<String, List<ArticleEntity>> yearDateMap = new LinkedHashMap<>();
+        for (ArticleEntity articleItem : dataList) {
+            String year = format.format(articleItem.getCtime());
+            if (yearDateMap.containsKey(year)) {
+                yearDateMap.get(year).add(articleItem);
+            } else {
+                List<ArticleEntity> list = new ArrayList<>();
+                list.add(articleItem);
+                yearDateMap.put(year, list);
+            }
+        }
+        List<JSONObject> result = new ArrayList<>();
+        for (Map.Entry<String, List<ArticleEntity>> entry : yearDateMap.entrySet()) {
+            JSONObject item = new JSONObject();
+            item.put("year", entry.getKey());
+            item.put("articles", entry.getValue());
+            result.add(item);
+        }
+        return result;
     }
 }

@@ -104,9 +104,9 @@ function index() {
       pageSize: pageSize,
     };
     $get("/category/findByPage", param)
-      .then((res: any) => {
+      .then((res) => {
         if (res.code === 0) {
-          let categoryList = res.data.list.map((item: any) => {
+          let categoryList = res.data.list.map((item) => {
             return {
               key: item.categoryId,
               ...item,
@@ -119,7 +119,7 @@ function index() {
           message.error(res.msg);
         }
       })
-      .catch((err: any) => {
+      .catch((err) => {
         message.error("系统异常");
       });
   };

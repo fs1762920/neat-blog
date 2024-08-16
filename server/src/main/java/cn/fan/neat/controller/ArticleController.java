@@ -8,9 +8,12 @@ import cn.fan.neat.entity.po.ArticleEntity;
 import cn.fan.neat.exception.BizException;
 import cn.fan.neat.service.ArticleService;
 import com.alibaba.druid.util.StringUtils;
+import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/article")
@@ -57,6 +60,7 @@ public class ArticleController {
 
     // 查询文章明细
     @GetMapping("/content")
+    @SaIgnore
     public BaseReturnDto getContent(Integer articleId) {
         if (articleId == null) {
             throw new BizException(ExceptionEnum.ILLEGAL_PARAM_ERROR);
@@ -69,6 +73,16 @@ public class ArticleController {
     @GetMapping("/findByPage")
     public BaseReturnDto findByPage(Integer pageNo, Integer pageSize, ArticleEntity articleEntity) {
         PageInfo<ArticleEntity> result = articleService.findByPage(pageNo, pageSize, articleEntity);
+        return BaseReturnDto.success(result);
+    }
+
+
+    @GetMapping("/findByArchive")
+    @SaIgnore
+    public BaseReturnDto findByArchive() {
+        ArticleEntity articleEntity = new ArticleEntity();
+        articleEntity.setStatus(1);
+        List<JSONObject> result = articleService.findByArchive(articleEntity);
         return BaseReturnDto.success(result);
     }
 

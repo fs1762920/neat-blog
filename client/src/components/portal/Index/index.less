@@ -74,6 +74,20 @@
     }
 
     .page-bar {
-        margin-bottom: 40px;
+        width: 800px;
+        height: 24px;
+        margin: 40px auto;
+        .ant-pagination {
+            float: inline-end;
+        }
+    }
+    @media only screen and (max-width: 800px) {
+        .page-bar {
+            max-width: calc(100vw - 80px);
+            margin: 40px auto;
+            .ant-pagination {
+                float: inline-end
+            }
+        }
     }
 }

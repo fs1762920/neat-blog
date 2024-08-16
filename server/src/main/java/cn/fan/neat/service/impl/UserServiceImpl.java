@@ -167,4 +167,9 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
+
+    @Override
+    public UserEntity getWebsiteInfo() {
+        return userMapper.selectOne(new UserEntity());
+    }
 }

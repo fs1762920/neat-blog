@@ -1,42 +1,44 @@
+import { useEffect, useState } from "react";
 import HeadCard from "@/components/portal/HeadCard";
+import { $get } from "@/api/RestUtils";
+import { useNavigate } from "react-router-dom";
 import "./index.less";
 
-const categoryList = [
-  {
-    id: 2,
-    name: "JAVA",
-  },
-  {
-    id: 3,
-    name: "Node.js",
-  },
-  {
-    id: 4,
-    name: "React",
-  },
-  {
-    id: 5,
-    name: "Vite",
-  },
-  {
-    id: 6,
-    name: "Webpack",
-  },
-  {
-    id: 7,
-    name: "Kafka",
-  },
-  {
-    id: 8,
-    name: "Websocket",
-  },
-  {
-    id: 9,
-    name: "Websocket",
-  },
-];
-
 function index() {
+  
+  const navigate = useNavigate();
+
+  const [categoryList, setCategoryList] = useState([]);
+
+  useEffect(() => {
+    loadCategoryList();
+  }, [])
+
+  const loadCategoryList = () => {
+    $get("/category/findAll")
+      .then((res) => {
+        if (res.code === 0) {
+          let categoryList = res.data.map((item) => {
+            return {
+              key: item.categoryId,
+              ...item,
+            };
+          });
+          setCategoryList(categoryList);
+        } else {
+          message.error(res.msg);
+        }
+      })
+      .catch((err) => {
+        message.error("系统异常");
+      });
+  }
+
+  const toArticleList = (categoryId) => {
+    navigate("/index?categoryId=" + categoryId)
+  }
+
+
   const renderCategorys = () => {
     return categoryList.map((item) => {
       return (
@@ -45,7 +47,7 @@ function index() {
           key={item.id}
           style={{ fontSize: Math.random() + 1 + "rem" }}
         >
-          <span>{item.name}</span>
+          <span onClick={() => toArticleList(item.categoryId)}>{item.categoryName}</span>
         </div>
       );
     });

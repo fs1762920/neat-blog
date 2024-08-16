@@ -88,4 +88,11 @@ public class UserController {
         userService.unlock(userId);
         return BaseReturnDto.success(BaseReturnDto.RESP_SUCCESS_CODE, "解锁成功");
     }
+
+    @GetMapping("/website")
+    @SaIgnore
+    public BaseReturnDto website() {
+        UserEntity info = userService.getWebsiteInfo();
+        return BaseReturnDto.success(info);
+    }
 }

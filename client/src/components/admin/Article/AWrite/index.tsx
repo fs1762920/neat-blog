@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Input, Button, Form, Modal, message, Select } from "antd";
 import { MdEditor } from "md-editor-rt";
 import { $get, $post } from "@/api/RestUtils";
@@ -10,18 +10,23 @@ function index() {
   
   const navigate = useNavigate();
 
-  const [articleForm] = Form.useForm();
-
   const titleRef = useRef(null);
+
+  const [articleForm] = Form.useForm();
+  const [searchParams] = useSearchParams();
+
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
-
   const [categoryList, setCategoryList] = useState([]);
-
   const [infoModalShow, setInfoModalShow] = useState(false);
 
   useEffect(() => {
     getCategoryList();
+    let articleId = searchParams.get('articleId');
+    if (articleId != undefined && articleId != null) {
+      articleForm.setFieldValue('articleId', articleId)
+      loadArticleInfo(articleId);
+    }
   }, [])
 
   const isEmpty = (value) => {
@@ -30,6 +35,27 @@ function index() {
     }
     return false;
   };
+
+  const loadArticleInfo = (articleId) => {
+    let param = {
+      articleId: articleId
+    }
+    $get("/article/content", param)
+      .then((res) => {
+        if (res.code === 0) {
+          let articleInfo = res.data;
+          setTitle(articleInfo.title);
+          setContent(articleInfo.content);
+          articleForm.setFieldValue('categoryId', articleInfo.categoryId);
+          articleForm.setFieldValue('introduction', articleInfo.introduction);
+        } else {
+          message.error(res.msg);
+        }
+      })
+      .catch((err) => {
+        message.error("系统异常");
+      });
+  }
 
   const getCategoryList = () => {
     $get("/category/findAll", null)
@@ -65,12 +91,21 @@ function index() {
   };
 
   const saveDraft = () => {
+    let url;
+    let articleId = articleForm.getFieldValue("articleId");
+    if (articleId != undefined && articleId != null) {
+      url = '/article/update'
+    } else {
+      url = '/article/save'
+    }
+
     let param = {
       title: title,
       content: content,
       status: 0,
+      articleId: articleForm.getFieldValue("articleId")
     };
-    $post("/article/save", param)
+    $post(url, param)
       .then((res) => {
         if (res.code == 0) {
           message.success(res.msg);
@@ -84,13 +119,21 @@ function index() {
   };
 
   const saveArticle = () => {
+    let url;
+    let articleId = articleForm.getFieldValue("articleId");
+    if (articleId != undefined && articleId != null) {
+      url = '/article/update'
+    } else {
+      url = '/article/save'
+    }
+    console.log("articleForm.getFieldsValue(): ", articleForm.getFieldsValue())
     let param = {
       title: title,
       content: content,
       status: 1,
       ...articleForm.getFieldsValue()
     };
-    $post("/article/save", param)
+    $post(url, param)
       .then((res) => {
         if (res.code == 0) {
           message.success(res.msg);
@@ -131,7 +174,7 @@ function index() {
           colon={false}
           onFinish={saveArticle}
         >
-          <Form.Item name="categoryId" hidden={true}>
+          <Form.Item name="articleId" hidden={true}>
             <Input />
           </Form.Item>
           <Form.Item
