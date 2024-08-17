@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HeadCard from "@/components/portal/HeadCard";
-import { dateFormat } from '@/utils/dateUtils'
+import { dateWithoutYearFormat } from '@/utils/dateUtils'
 import { $get } from "@/api/RestUtils";
 import "./index.less";
 
@@ -47,7 +47,7 @@ function index() {
           key={item.articleId}
           onClick={() => toDetail(item.articleId)}
         >
-          <div className="date">{dateFormat(item.ctime)}</div>
+          <div className="date">{dateWithoutYearFormat(item.ctime)}</div>
           <div className="title">{item.title}</div>
         </div>
       );
