@@ -91,7 +91,7 @@ function index() {
         if (res.code === 0) {
           let articleList = res.data.list.map((item: any) => {
             return {
-              key: item.categoryId,
+              key: item.articleId,
               ...item,
             };
           });

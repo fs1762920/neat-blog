@@ -44,7 +44,7 @@ function index() {
       return (
         <div
           className="category-item"
-          key={item.id}
+          key={item.categoryId}
           style={{ fontSize: Math.random() + 1 + "rem" }}
         >
           <span onClick={() => toArticleList(item.categoryId)}>{item.categoryName}</span>

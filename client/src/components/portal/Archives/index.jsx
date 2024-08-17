@@ -44,7 +44,7 @@ function index() {
       return (
         <div
           className="article-item"
-          key={item.id}
+          key={item.articleId}
           onClick={() => toDetail(item.articleId)}
         >
           <div className="date">{dateFormat(item.ctime)}</div>
