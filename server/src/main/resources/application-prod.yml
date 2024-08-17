@@ -29,7 +29,7 @@ pagehelper:
   support-methods-arguments: true
 
 upload:
-  target-path: /data/upload
+  target-path: /app/neat-blog/attachment
   path-prefix: /upload
 
 sa-token:
