@@ -193,7 +193,7 @@ function index() {
               { required: true, type: "string", message: "文章概述" }
             ]}
           >
-            <Input placeholder="文章概述" maxLength={256} />
+            <Input.TextArea placeholder="文章概述" rows={5} maxLength={500} />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
