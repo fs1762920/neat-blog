@@ -166,6 +166,7 @@ function index() {
         open={infoModalShow}
         closable={true}
         footer={null}
+        onCancel={() => setInfoModalShow(false)}
       >
         <Form
           form={articleForm}
