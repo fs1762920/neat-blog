@@ -37,7 +37,7 @@ function index() {
   }
 
   return (
-    <div className="article-main">
+    <div className="article-portal">
       <div className="info">
         <div className="title">
           {articleInfo.title}

@@ -68,7 +68,7 @@ function index() {
   return (
     <>
       <HeadCard />
-      <div className="archives">{renderTimeline()}</div>
+      <div className="archives-portal">{renderTimeline()}</div>
     </>
   );
 }

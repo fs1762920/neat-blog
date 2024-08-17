@@ -35,7 +35,7 @@ function index() {
   return (
     <>
       <HeadCard />
-      <div className="about">
+      <div className="about-portal">
         <div className="self-report">
           <p>记录日常生活、学习和技术文章。</p>
           <p>

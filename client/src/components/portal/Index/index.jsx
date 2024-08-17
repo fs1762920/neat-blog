@@ -74,7 +74,7 @@ function index() {
   return (
     <>
       <HeadCard />
-      <div className="index">
+      <div className="index-portal">
         <div className="article-list">{renderArticles()}</div>
         <div className="page-bar">
           <Pagination simple current={currentPage} pageSize={5} total={total} onChange={search} />
