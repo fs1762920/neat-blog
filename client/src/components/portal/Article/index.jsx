@@ -48,7 +48,7 @@ function index() {
         </div>
       </div>
       <div className="article-area">
-        <MdPreview modelValue={articleInfo.content} />
+        <MdPreview previewTheme="smart-blue" modelValue={articleInfo.content} />
       </div>
     </div>
   );
