@@ -62,7 +62,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<JSONObject> findByArchive(ArticleEntity articleEntity) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
         List<ArticleEntity> dataList = articleMapper.selectBySelective(articleEntity);
         Map<String, List<ArticleEntity>> yearDateMap = new LinkedHashMap<>();
         for (ArticleEntity articleItem : dataList) {
