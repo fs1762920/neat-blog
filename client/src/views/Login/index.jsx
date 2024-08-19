@@ -64,7 +64,7 @@ function Login() {
               },
             ]}
           >
-            <Input.Password size="large" placeholder="username" maxLength={16} />
+            <Input.Password size="large" placeholder="password" maxLength={16} />
           </Form.Item>
 
           <Form.Item

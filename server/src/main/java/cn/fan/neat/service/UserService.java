@@ -19,4 +19,6 @@ public interface UserService {
     void initUser();
 
     void recoverAccountStatus();
+
+    UserEntity getWebsiteInfo();
 }

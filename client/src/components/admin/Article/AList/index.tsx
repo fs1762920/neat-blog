@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { datetimeFormat } from '@/utils/dateUtils'
-import { $get, $post } from "@/api/RestUtils";
+import { $get } from "@/api/RestUtils";
 import "./index.less"
 
 function index() {
@@ -91,7 +91,7 @@ function index() {
         if (res.code === 0) {
           let articleList = res.data.list.map((item: any) => {
             return {
-              key: item.categoryId,
+              key: item.articleId,
               ...item,
             };
           });
@@ -149,7 +149,7 @@ function index() {
   }
 
   const toEdit = (id) => {
-    navigate("/admin/article/write")
+    navigate("/admin/article/write?articleId=" + id);
   }
 
   return (

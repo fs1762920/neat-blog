@@ -44,27 +44,16 @@
         select
             a.article_id,
             a.title,
+            a.content,
             a.category_id,
             a.introduction,
             a.status,
             a.ctime,
-            a.mtime
+            a.mtime,
+            c.category_name
         from neat_blog.n_article a
-        <where>
-            <if test="articleId != null">
-                and a.article_id = #{articleId}
-            </if>
-            <if test="title != null">
-                and a.title like concat('%', #{title}, '%')
-            </if>
-            <if test="categoryId != null">
-                and a.category_id = #{categoryId}
-            </if>
-            <if test="status != null">
-                and a.status = #{status}
-            </if>
-        </where>
-        order by a.ctime desc
+        left join neat_blog.n_category c on a.category_id = c.category_id
+        where a.article_id = #{articleId}
     </select>
     <insert id="insert" keyColumn="article_id" keyProperty="articleId" parameterType="cn.fan.neat.entity.po.ArticleEntity" useGeneratedKeys="true">
         insert into neat_blog.n_article
@@ -81,8 +70,8 @@
             <if test="content != null and content != ''">
                 content = #{content},
             </if>
-            <if test="category_id != null">
-                category_id = #{category_id},
+            <if test="categoryId != null">
+                category_id = #{categoryId},
             </if>
             <if test="introduction != null">
                 introduction = #{introduction},

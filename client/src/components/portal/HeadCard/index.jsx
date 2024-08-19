@@ -4,8 +4,8 @@ function index() {
   return (
     <>
       <div className="cover">
-        <div className="logo">NEAT-BLOG</div>
-        <div className="intro">You dare use my own speech against me!</div>
+        <div className="logo">Nightingale</div>
+        <div className="intro">"The higher I got, the more amazed I was by the view."</div>
       </div>
     </>
   );

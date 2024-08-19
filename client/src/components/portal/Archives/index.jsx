@@ -1,57 +1,42 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import HeadCard from "@/components/portal/HeadCard";
+import { dateWithoutYearFormat } from '@/utils/dateUtils'
+import { $get } from "@/api/RestUtils";
 import "./index.less";
 
-const articleList = [
-  {
-    year: 2024,
-    articles: [
-      {
-        id: 0,
-        title: "vue整合antd",
-        introduction:
-          "This post is originated from here and is used for testing markdown style. This post contains nearly every markdown usage. Make sure all the markdown elements below show up correctly.",
-        createTime: "01-23",
-      },
-      {
-        id: 1,
-        title: "react整合antd",
-        introduction:
-          "This post is originated from here and is used for testing markdown style. This post contains nearly every markdown usage. Make sure all the markdown elements below show up correctly.",
-        createTime: "01-23",
-      },
-      {
-        id: 2,
-        title: "Code Highlight Style test",
-        introduction:
-          "Make sure all the code blocks highlighted correctly. All the code samples are come from the demo of https://highlightjs.org",
-        createTime: "01-23",
-      },
-    ],
-  },
-  {
-    year: 2023,
-    articles: [
-      {
-        id: 3,
-        title: "Code Highlight Style test",
-        introduction:
-          "Make sure all the code blocks highlighted correctly. All the code samples are come from the demo of https://highlightjs.org",
-        createTime: "01-23",
-      },
-      {
-        id: 4,
-        title: "Code Highlight Style test",
-        introduction:
-          "Make sure all the code blocks highlighted correctly. All the code samples are come from the demo of https://highlightjs.org",
-        createTime: "01-23",
-      },
-    ],
-  },
-];
-
 function index() {
+  
+  const navigate = useNavigate();
+
+  const [archiveList, setArchiveList] = useState([]);
+
+  useEffect(() => {
+    loadArchives();
+  }, [])
+
+  const loadArchives = () => {
+    $get("/article/findByArchive")
+      .then((res) => {
+        if (res.code === 0) {
+          let archiveList = res.data.map((item, index) => {
+            return {
+              key: index,
+              ...item,
+            };
+          });
+          setArchiveList(archiveList);
+        } else {
+          message.error(res.msg);
+        }
+      })
+      .catch((err) => {
+        message.error("系统异常");
+      });
+  }
+
   const toDetail = (id) => {
-    console.log("id: ", id);
+    navigate('/article?articleId=' + id);
   };
 
   const renderArticles = (list) => {
@@ -59,10 +44,10 @@ function index() {
       return (
         <div
           className="article-item"
-          key={item.id}
-          onClick={() => toDetail(item.id)}
+          key={item.articleId}
+          onClick={() => toDetail(item.articleId)}
         >
-          <div className="date">{item.createTime}</div>
+          <div className="date">{dateWithoutYearFormat(item.ctime)}</div>
           <div className="title">{item.title}</div>
         </div>
       );
@@ -70,7 +55,7 @@ function index() {
   };
 
   const renderTimeline = () => {
-    return articleList.map((item) => {
+    return archiveList.map((item) => {
       return (
         <div className="timeline-item" key={item.year}>
           <div className="year">{item.year}</div>
@@ -83,7 +68,7 @@ function index() {
   return (
     <>
       <HeadCard />
-      <div className="archives">{renderTimeline()}</div>
+      <div className="archives-portal">{renderTimeline()}</div>
     </>
   );
 }

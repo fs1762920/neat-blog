@@ -21,4 +21,6 @@ public interface UserMapper {
     void deleteByPrimaryKey(Integer userId);
 
     Integer selectCount();
+
+    UserEntity selectOne(UserEntity userEntity);
 }

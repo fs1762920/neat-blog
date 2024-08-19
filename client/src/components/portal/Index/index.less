@@ -1,4 +1,4 @@
-.index {
+.index-portal {
     .article-list {
         width: 800px;
         margin: 0 auto;
@@ -11,8 +11,8 @@
             cursor: pointer;
 
             .title {
-                font-size: 1.6rem;
-                margin-bottom: 40px;
+                font-size: 20px;
+                margin-bottom: 20px;
                 font-weight: 600;
             }
 
@@ -20,11 +20,28 @@
                 line-height: 24px;
                 margin-bottom: 20px;
                 font-size: 16px;
+                height: 72px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
             }
 
-            .date {
-                line-height: 24px;
-                font-size: 16px;
+            .item-foot {
+                display: flex;
+                align-items: center;
+                .date {
+                    margin-right: auto;
+                    line-height: 24px;
+                    font-size: 16px;
+                }
+                .category {
+                    margin-left: auto;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: rgb(43, 110, 226);
+                }
             }
 
             &:hover {
@@ -42,8 +59,8 @@
                 cursor: pointer;
     
                 .title {
-                    font-size: 1.6rem;
-                    margin-bottom: 40px;
+                    font-size: 18px;
+                    margin-bottom: 20px;
                     font-weight: 600;
                     line-height: 28px;
                 }
@@ -52,12 +69,31 @@
                     line-height: 24px;
                     margin-bottom: 20px;
                     font-size: 16px;
+                    height: 72px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
                 }
-    
-                .date {
-                    line-height: 24px;
-                    font-size: 16px;
+                
+                .item-foot {
+                    display: flex;
+                    align-items: center;
+                    .date {
+                        margin-right: auto;
+                        width: 120px;
+                        line-height: 24px;
+                        font-size: 16px;
+                    }
+                    .category {
+                        margin-left: auto;
+                        font-size: 16px;
+                        font-weight: 600;
+                        color: rgb(43, 110, 226);
+                    }
                 }
+                
     
                 &:hover {
                     transform: translateY(-5px);
@@ -74,6 +110,20 @@
     }
 
     .page-bar {
-        margin-bottom: 40px;
+        width: 800px;
+        height: 24px;
+        margin: 40px auto;
+        .ant-pagination {
+            float: inline-end;
+        }
+    }
+    @media only screen and (max-width: 800px) {
+        .page-bar {
+            max-width: calc(100vw - 80px);
+            margin: 40px auto;
+            .ant-pagination {
+                float: inline-end
+            }
+        }
     }
 }
