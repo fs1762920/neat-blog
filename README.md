@@ -1,39 +1,46 @@
-# neat-blog
+### 前端部署
+修改/neat-blog/client/.env.prod
+```language
+// 后端api接口的ip:port
+VITE_BASE_URL=http(s)://ip:port
+// 文件服务器（nginx）的ip:port
+VITE_REMOTE_FILE_URL=http(s)://ip:port
+```
+构建项目
+```language
+npm run build
+```
+将打包好的dist目录放到服务器nginx映射的目录下
+![](http://47.108.237.122:8082/upload/1d5a8369b74242dcb60d27b87f2a8254.png)
+### 后端部署
+#### 创建库表
+执行/neat-blog/server/sql/scheme.sql
+#### 预设网站信息
+修改application-prod.yml
+```yaml
+upload:
+  target-path: *****文件上传服务器上的绝对路径*****
+  path-prefix: /upload
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+sa-token:
+  token-name: satoken
+  timeout: 14400
+  activity-timeout: -1
+  is-concurrent: false
+  is-share: true
+  is-log: true
+  token-style: random-128
+  tokenPrefix: Bearer
+  private-key: ******rsa私钥******
+  public-key: ******rsa公钥******
+  init-mail: ******站长邮箱******
+  init-username: ******登录账户******
+  init-password: ******登录密码******
+```
+构建项目
+```language
+mvn -DskipTests=true package
+```
+将打包好的.jar放到服务器上，并启动
 
-#### 软件架构
-软件架构说明
-
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+**访问http://服务器ip:nginx上映射的前端端口/**
