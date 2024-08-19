@@ -6,8 +6,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/neat_blog?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: qwer1234
+    username: username
+    password: password
     druid:
       validation-query: SELECT 1 FROM DUAL
       initial-size: 5
@@ -41,11 +41,11 @@ sa-token:
   is-log: true
   token-style: random-128
   tokenPrefix: Bearer
-  private-key: MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAJNkuInvPLR+MabW9M7MsofR0kyjwrYMN9F0H0+DpUcrsJDr1qstGHQo3qR6vxaL2lW67MawNBY6oomaMn2wAzSzMnYCwB12MXPaenVXm86D8vsE0y+cVfYtVZPBRCblDjl9uNkY5lhzoQBEz/X/jA08On8PbCJkmfbHLwVmSpuvAgMBAAECgYBpbdxKXeQQP0wIyS1nVyhE2qMQyvqV+XtbyTI0UDhDBk9P+kIdQy6AuFM5V8ujtvm/5OtE2/kGBX8J6lA/c012obxZuya28UP6Ndb//Lrdxkfx7iK02nRgDhZ5Za7b4x1qsxhb8AW0TUg4jTgW0TLYPLJFlUJC+0qMa2MyHCgpoQJBAPO2rk7vOAffNT4kgOGAg4ABaxhgql8hwpwar6KjcoW3g73U1aX/zkZn9fnNtZrMPK1NO3NBQ1friYplb/ShqLcCQQCa0vODXRynC4F/cMe8xF+NqQRwUNIflnauJgWjZ5tcex/ztap59UWPOQe6ueHjwHOEPgqcYDZ+Rbr1Ybf1//zJAkBHfCL+pi5CKNd+Jcjj3AU2S7Q1D02J3+YsUauIwfZ6gEyVJtOQAEtp3V6J6ivFfvihQJEail8Nb9oFDSHcmHpbAkBBfX44UQivuHQ8vi4fMUniGF6iS+22IuVs4PR9nHPheMuZQX0tPY0A+nTEjaB5wIycocnHQAONAl4FMiKo0nHRAkA26dM1DJJRHlDyBgKy+Ls55Mr61XKvy6dH+wOe620WoZHwxploX0F+ohjJKnChmcur/otBMIPe9el/NfubuS1a
-  public-key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCTZLiJ7zy0fjGm1vTOzLKH0dJMo8K2DDfRdB9Pg6VHK7CQ69arLRh0KN6ker8Wi9pVuuzGsDQWOqKJmjJ9sAM0szJ2AsAddjFz2np1V5vOg/L7BNMvnFX2LVWTwUQm5Q45fbjZGOZYc6EARM/1/4wNPDp/D2wiZJn2xy8FZkqbrwIDAQAB
-  init-mail: fs1762920@163.com
-  init-username: fs1762920
-  init-password: root123.
+  private-key: private-key
+  public-key: public-key
+  init-mail: init-mail
+  init-username: init-username
+  init-password: init-password
 
 login:
   retry-times: 5
