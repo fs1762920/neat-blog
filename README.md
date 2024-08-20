@@ -11,6 +11,7 @@ VITE_REMOTE_FILE_URL=http(s)://ip:port
 npm run build
 ```
 将打包好的dist目录放到服务器nginx映射的目录下
+
 ![](http://47.108.237.122:8082/upload/1d5a8369b74242dcb60d27b87f2a8254.png)
 ### 后端部署
 #### 创建库表
